@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keyword" content="calculation, web, delopment, html, css, javascript.">
+    <meta name="description" content="thi website is built with html,css, and javascript fof it's functionalities">
+    <meta name="author" content="put your name">
+    <title>Calculator with Javascript</title>
+    <!-- favicon -->
+ <link rel="icon" href="addyourimagehere" type="icon/extension">
+ <style>
+     *{
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+     } 
+    body{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background: #000;
+    }
+    .container{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 300px;
+    }
+    h3{
+        text-align: center;
+        margin: 10px;
+        font-size: 27px;
+        font-weight: 500;
+        color: white;
+        /* display: inline-block; */
+    }
+    .display{
+        display: block;
+        height: 100px;
+        width: 100%;
+        border: 1px solid orange;
+        pointer-events: none;
+        outline: none;
+        font-size: 20px;
+        text-align: right;
+        padding: 10px;
+        margin-bottom: 20px;
+        background: transparent;
+        color: white;
+    }
+    
+    .buttons{
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-gap: 15px;
+    }
+    .buttons button{
+        padding: 10px;
+        border-radius: 6px;
+        background: orange;
+        color: white;
+        font-size: 20px;
+        font-weight: 500px;
+        outline: none;
+    }
+     .buttons button:hover{
+        opacity: 0.7;
+     }
+     .buttons .operator{
+        color: #c33;
+        font-weight: bold;;
+     }
+
+
+
+
+
+ </style>
+</head>
+
+<body>
+    <!-- html code -->
+     <div class="container">
+        <h3>Simple caculator with javascript</h3>
+        <input type="text" class="display">
+        <div class="buttons">
+            <button class="operator" data-value="DEL">DEL</button>
+            <button class="operator" data-value="AC">AC</button>
+            <button class="operator" data-value="%">%</button>
+            <button class="operator" data-value="/">/</button>
+           
+            <button data-value="7">7</button>
+            <button data-value="8">8</button>
+            <button data-value="9">9</button>
+            <button class="operator" data-value="+">+</button>
+
+            <button data-value="4">4</button>
+            <button data-value="5">5</button>
+            <button data-value="6">6</button>
+            <button class="operator" data-value="-">-</button>
+
+            <button data-value="3">3</button>
+            <button data-value="2">2</button>
+            <button data-value="1">1</button>
+            <button class="operator" data-value="*">*</button>
+
+            
+            <button data-value="0">0</button>
+            <button data-value="00">00</button>
+            <button data-value=".">.</button>
+            <button class="operator" data-value="=">=</button>
+        </div>
+     </div>
+
+     <!-- script -->
+     <script>
+      const display = document.querySelector(".display");
+      const buttons = document.querySelectorAll("button");
+      const specialChars = ["%","/","*","-","+","="];
+      let output = "";
+      
+      const calculate = (btnValue) => {
+        display.focus();
+        if(btnValue === "=" && output !== ""){
+            // if output has '%' replace with "100" before evaluating
+            output = eval(output.replace("%","/100"));
+        }else if(btnValue === "AC"){
+            output = "";
+        }else if(btnValue === "DEL"){
+            // if DEL button is clicked, remove the last character from the output
+            output = output.toString().slice(0,-1);
+        }else{
+            // if output is empty and button in specialchars then return
+            if(output === "" && specialChars.includes(btnValue))return;
+            output += btnValue;
+        }
+        display.value = output;
+      };
+    //   AddEventListener to each button, call calculate() onclick
+    buttons.forEach((button) => {
+        // each button clicked listens to call function call "calculate()" with dataset value as arument 
+        button.addEventListener('click',(e) => calculate(e.target.dataset.value));
+    })
+
+    
+     </script>
+</body>
+</html>
